@@ -1,0 +1,14 @@
+.form-container {
+    width: 55%;
+    border: 5px;
+    border-style: solid;
+    background-color: beige;
+    border-color: blanchedalmond;
+    border-radius: 10%;
+    margin-left: 25%;
+    padding: 5%;
+}
+
+.col-auto{
+    margin-bottom: 1%;
+}

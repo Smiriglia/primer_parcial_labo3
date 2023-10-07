@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+      <form id="form-datos" class="form-container">
+          <h1>Form Datos</h1>
+          <div class="row g-2">
+              
+              <div class="col-auto">
+                  <label class="form-control-plaintext">Filtrar Por: </label>
+              </div>
+              <div class="col-auto">
+                  <select id="select-filtro" class="form-select">
+                      <option value="todos">Todos</option>
+                      <option value="aereos">aereos</option>
+                      <option value="terrestres">terrestres</option>
+                  </select>
+              </div>
+          </div>
+          <br />
+          <div class="row g-3">
+              <div class="col-auto">
+                  <label class="form-control-plaintext">Calcular velMax Promedio:</label>
+              </div>
+              <div class="col-auto">
+                  <input class="form-control" id="txtPromedio" placeholder="Promedio" type="text" readonly>
+              </div>
+              <div class="col-auto">
+                  <button id="btn_calcular" class="btn btn-primary mb-3">Calcular</button>
+              </div>
+          </div>
+          <br>
+          <label>Mostrar columnas: </label>
+          <input type="checkbox" id="idCheck" name="id" value="music">
+          <label>Id</label>
+          <input type="checkbox" id="modeloCheck" name="modelo" value="music">
+          <label>modelo</label>
+          <input type="checkbox" id="anoFabCheck" name="anoFab" value="music">
+          <label>anoFab</label>
+          <input type="checkbox" id="velMaxCheck" name="velMax" value="music">
+          <label>velMax</label>
+          <input type="checkbox" id="altMaxCheck" name="altMax" value="music">
+          <label>altMax</label>
+          <input type="checkbox" id="autonomiaCheck" name="autonomia" value="music">
+          <label>autonomia</label>
+          <input type="checkbox" id="cantPueCheck" name="cantPue" value="music">
+          <label>cantPue</label>
+          <input type="checkbox" id="cantRueCheck" name="cantRue" value="music">
+          <label>cantRue</label>
+          <table id="table-datos" class="table table-striped table-dark">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th id="t-head-id" scope="col">Id</th>
+                <th id="t-head-modelo" scope="col">modelo</th>
+                <th id="t-head-anoFab" scope="col">anoFab</th>
+                <th id="t-head-velMax" scope="col">velMax</th>
+                <th id="t-head-altMax" scope="col">altMax</th>
+                <th id="t-head-autonomia" scope="col">autonomia</th>
+                <th id="t-head-cantPue" scope="col">cantPue</th>
+                <th id="t-head-cantRue" scope="col">cantRue</th>
+              </tr>
+            </thead>
+            <tbody id="t-user-body">
+              <!-- <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr> -->
+            </tbody>
+        </table>
+        <button id="btn-mostrar-agregar" type="button" class="btn btn-success">Agregar</button>
+      </form>
+    <form id="form-agregar" class="form-container" hidden>
+      <div class="row g-2">
+        <div class="col-auto">
+            <label class="form-control-plaintext">id</label>
+        </div>
+        <div class="col-auto">
+            <input class="form-control" id="txt-id" placeholder="id" type="text">
+        </div>
+      </div>
+      <div class="row g-2">
+        <div class="col-auto">
+            <label class="form-control-plaintext">modelo</label>
+        </div>
+        <div class="col-auto">
+            <input class="form-control" id="txt-modelo" placeholder="modelo" type="text">
+        </div>
+      </div>
+      <div class="row g-2">
+        <div class="col-auto">
+            <label class="form-control-plaintext">Año Fabricacion</label>
+        </div>
+        <div class="col-auto">
+            <input class="form-control" id="txt-anoFab" placeholder="anoFab" type="text">
+        </div>
+      </div>
+      <div class="row g-2">
+        <div class="col-auto">
+            <label class="form-control-plaintext">Velocidad Maxima</label>
+        </div>
+        <div class="col-auto">
+            <input class="form-control" id="txt-velMax" placeholder="velMax" type="text">
+        </div>
+      </div>
+      <div class="row g-2">
+        <div class="col-auto">
+            <label class="form-control-plaintext">Tipo</label>
+        </div>
+        <div class="col-auto">
+          <select id="select-tipo" class="form-select">
+            <option value="aereo">aereo</option>
+            <option value="terrestre">terrestre</option>
+          </select>
+        </div>
+      </div>
+      <div id="div-altMax" class="row g-2">
+        <div class="col-auto">
+            <label class="form-control-plaintext">Altura Maxima</label>
+        </div>
+        <div class="col-auto">
+            <input class="form-control" id="txt-altMax" placeholder="altMax *" type="text">
+        </div>
+      </div>
+      <div id="div-autonomia" class="row g-2">
+        <div class="col-auto">
+            <label class="form-control-plaintext">Autonomia</label>
+        </div>
+        <div class="col-auto">
+            <input class="form-control" id="txt-autonomia" placeholder="autonomia *" type="text">
+        </div>
+      </div>
+      <div id="div-cantPue" class="row g-2" hidden>
+        <div class="col-auto">
+            <label class="form-control-plaintext">Cantidad Puedas</label>
+        </div>
+        <div class="col-auto">
+            <input class="form-control" id="txt-cantPue" placeholder="cantPue *" type="text">
+        </div>
+      </div>
+      <div id="div-cantRue" class="row g-2" hidden>
+        <div class="col-auto">
+            <label class="form-control-plaintext">Cantidad Ruedas</label>
+        </div>
+        <div class="col-auto">
+            <input class="form-control" id="txt-cantRue" placeholder="cantRue *" type="text">
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-auto">
+          <button id="btn-agregar" type="button" class="btn btn-success">Agregar</button>
+        </div>
+        <div class="col-auto">
+          <button id="btn-modificar" type="button" class="btn btn-warning">Modificar</button>
+        </div>
+        <div class="col-auto">
+          <button id="btn-eliminar" type="button" class="btn btn-danger">Eliminar</button>
+        </div>
+        <div class="col-auto">
+          <button id="btn-cancelar" type="button" class="btn btn-dark">Cancelar</button>
+        </div>
+      </div>
+    </form>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script type = "text/javascript" src="script.js"></script>  
+
+</body>
+</html>
