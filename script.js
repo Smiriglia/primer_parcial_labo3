@@ -411,7 +411,7 @@ const btn_modificar = document.getElementById("btn-modificar");
 btn_modificar.addEventListener("click", (e) => {
     e.preventDefault();
     let vehiculo;
-    const id = document.getElementById("txt-id");
+    let id = document.getElementById("txt-id").value;
     const modelo = document.getElementById("txt-modelo").value;
     let anoFab = document.getElementById("txt-anoFab").value;
     let velMax = document.getElementById("txt-velMax").value;
@@ -424,8 +424,8 @@ btn_modificar.addEventListener("click", (e) => {
     // let indiceVehiculoABorrar = -1;
     let contadorModificados = 0;
     let modeloVehiculo;
-    id = parseInt(id);
     let i = 0;
+    id = parseInt(id);
     if (id)
     {
         if (modelo !== "" )
@@ -456,7 +456,6 @@ btn_modificar.addEventListener("click", (e) => {
                                         vehiculo.altMax = altMax;
                                         vehiculo.autonomia = autonomia;
                                         contadorModificados++;
-                                        i--;
                                     }
                                     i++;
                                 }
@@ -486,19 +485,31 @@ btn_modificar.addEventListener("click", (e) => {
                         cantPue = parseInt(cantPue);
                         if (cantPue && cantPue > -1)
                         {
-                            cantRue = parseInt(cantRue);
-                            if (cantRue && cantRue > 0)
-                            {
-                                vehiculo = new Terrestre(id, modelo, anoFab, velMax, cantPue, cantRue);
-                                vehiculos.push(vehiculo);
-                                mensaje = "vehiculo agregado correctamente";
-                                ActualizarTabla();
-                                MostrarDatos();
-                            }
-                            else
-                            {
-                                mensaje = "Dato invalido en la velocidad maxima";
-                            }
+                            while (i < vehiculos.length - 1)
+                                {
+                                    vehiculo = vehiculos[i]
+                                    if (vehiculo.id === id)
+                                    {
+                                        modeloVehiculo = vehiculo.modelo;
+                                        vehiculo.modelo = modelo;
+                                        vehiculo.anoFab = anoFab;
+                                        vehiculo.velMax = velMax;
+                                        vehiculo.cantPue = cantPue;
+                                        vehiculo.cantRue = cantRue;
+                                        contadorModificados++;
+                                    }
+                                    i++;
+                                }
+                                if (contadorModificados > 0)
+                                {
+                                    mensaje = "Se han modificado " + contadorModificados + " del modelo " + modeloVehiculo;
+                                    ActualizarTabla();
+                                    MostrarDatos();
+                                }
+                                else
+                                {
+                                    mensaje = "Id no existente";
+                                }
                         }
                         else
                         {
@@ -522,7 +533,7 @@ btn_modificar.addEventListener("click", (e) => {
     }
     else
     {
-        mensaje = "El id debe ser un numero"
+        mensaje = "El id debe ser un numero";
     }
     
 
