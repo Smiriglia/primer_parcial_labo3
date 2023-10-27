@@ -3,42 +3,10 @@ class Vehiculo
     constructor(id, modelo, anoFab, velMax)
     {
         this.id = id;
-        this.SetModelo(modelo);
-        this.SetAnoFab(anoFab);
-        this.SetVelMax(velMax);
+        this.modelo = modelo;
+        this.anoFab = anoFab;
+        this.velMax = velMax;
     }
-
-    SetModelo(modelo)
-    {
-        if (typeof modelo === 'string' && modelo !== "")
-            this.modelo = modelo;
-        else
-            throw new Error("El modelo no puede ser un string vacio");
-    }
-
-    SetAnoFab(anoFab)
-    {
-        let anoFabAux = anoFab;
-        if (!Number.isInteger(anoFabAux))
-            anoFabAux = parseInt(anoFabAux);
-        if (!isNaN(anoFabAux) && anoFabAux > 1885)
-            this.anoFab = anoFab;
-        else
-            throw new Error("Año de fabricacion invalido");
-    }
-
-    SetVelMax(velMax)
-    {
-        let velMaxAux = velMax;
-        if (!Number.isInteger(velMaxAux))
-            velMaxAux = parseInt(velMaxAux);
-        if (!isNaN(velMaxAux) && velMaxAux > 0)
-            this.velMax = velMax;
-        else
-            throw new Error("Velocidad Maxima invalida");
-    }
-    
-    
 
     toString()
     {
@@ -50,40 +18,14 @@ class Vehiculo
     }
 }
 
-
-
 class Aereo extends Vehiculo
 {
     constructor(id, modelo, anoFab, velMax, altMax, autonomia)
     {
         super(id, modelo, anoFab, velMax);
-        this.SetAltMax(altMax);
-        this.SetAutonomia(autonomia);
+        this.altMax = altMax;
+        this.autonomia = autonomia;
     }
-
-    
-    SetAltMax(altMax)
-    {
-        let altMaxAux = altMax;
-        if (!Number.isInteger(altMaxAux))
-            altMaxAux = parseInt(altMaxAux);
-        if (!isNaN(altMaxAux) && altMaxAux > 0)
-            this.altMax = altMax;
-        else
-            throw new Error("Altura maxima invalida");
-    }
-
-    SetAutonomia(autonomia)
-    {
-        let autonomiaAux = autonomia;
-        if (!Number.isInteger(autonomiaAux))
-            autonomiaAux = parseInt(autonomiaAux);
-        if (!isNaN(autonomiaAux) && autonomiaAux > 0)
-            this.autonomia = autonomia;
-        else
-            throw new Error("Autonomia invalida");
-    }
-
     toString()
     {
         var mensaje = super.toString();
@@ -94,40 +36,14 @@ class Aereo extends Vehiculo
 
 }
 
-
-
 class Terrestre extends Vehiculo
 {
     constructor(id, modelo, anoFab, velMax, cantPue, cantRue)
     {
         super(id, modelo, anoFab, velMax);
-        this.SetCantPue(cantPue);
-        this.SetCantRue(cantRue);
+        this.cantPue = cantPue;
+        this.cantRue = cantRue;
     }
-
-    SetCantPue(cantPue)
-    {
-        let cantPueAux = cantPue;
-        if (!Number.isInteger(cantPueAux))
-            cantPueAux = parseInt(cantPueAux);
-        if (!isNaN(cantPueAux) && cantPueAux > -1)
-            this.cantPue = cantPue;
-        else
-            throw new Error("Cantidad de puertas invalida");
-    }
-
-    SetCantRue(cantRue)
-    {
-        let cantRueAux = cantRue;
-        if (!Number.isInteger(cantRueAux))
-            cantRueAux = parseInt(cantRueAux);
-        if (!isNaN(cantRueAux) && cantRueAux > 0)
-            this.cantRue = cantRue;
-        else
-            throw new Error("Cantidad de ruedas invalida");
-    }
-    
-
     toString()
     {
         var mensaje = super.toString();
@@ -136,8 +52,6 @@ class Terrestre extends Vehiculo
         return mensaje;
     }
 }
-
-
 
 let dataJSON = '[{"id":14, "modelo":"Ferrari F100", "anoFab":1998, "velMax":400, "cantPue":2, "cantRue":4},{"id":51, "modelo":"DodgeViper", "anoFab":1991, "velMax":266, "cantPue":2, "cantRue":4},{"id":67, "modelo":"Boeing CH-47 Chinook","anoFab":1962, "velMax":302, "altMax":6, "autonomia":1200},{"id":666, "modelo":"Aprilia RSV 1000 R","anoFab":2004, "velMax":280, "cantPue":0, "cantRue":2},{"id":872, "modelo":"Boeing 747-400", "anoFab":1989,"velMax":988, "altMax":13, "autonomia":13450},{"id":742, "modelo":"Cessna CH-1 SkyhookR", "anoFab":1953,"velMax":174, "altMax":3, "autonomia":870}]';
 
@@ -271,83 +185,94 @@ function MostrarAgregar()
     btn_agregar.hidden = false;
 
 }
-
-function Agregar()
-{
-    try
-    {
-        let nuevoVehiculo;
-        const modelo = document.getElementById("txt-modelo").value;
-        const anoFab = document.getElementById("txt-anoFab").value;
-        const velMax = document.getElementById("txt-velMax").value;
-        const altMax = document.getElementById("txt-altMax").value;
-        const autonomia = document.getElementById("txt-autonomia").value;
-        const cantPue = document.getElementById("txt-cantPue").value;
-        const cantRue = document.getElementById("txt-cantRue").value;
-        const tipo = document.getElementById("select-tipo").value;
-        let id = ObtenerProximoId(vehiculos);
-
-        if (tipo == "aereo")
-        {
-            nuevoVehiculo = new Aereo(id, modelo, anoFab, velMax, altMax, autonomia);
-        }
-        else
-        {
-            nuevoVehiculo = new Terrestre(id, modelo, anoFab, velMax, cantPue, cantRue);
-        }
-        vehiculos.push(nuevoVehiculo);
-        ActualizarTabla();
-        MostrarDatos();
-        mensaje = "El vehiculo se ha agregado correctamente";
-    }
-    catch(error)
-    {
-        mensaje = "Error: " + error.message;
-    }
-
-    alert(mensaje);
-}
-
 function Modificar(vehiculo)
 {
-    try
+    const modelo = document.getElementById("txt-modelo").value;
+    let anoFab = document.getElementById("txt-anoFab").value;
+    let velMax = document.getElementById("txt-velMax").value;
+    let altMax = document.getElementById("txt-altMax").value;
+    let autonomia = document.getElementById("txt-autonomia").value;
+    let cantPue = document.getElementById("txt-cantPue").value;
+    let cantRue = document.getElementById("txt-cantRue").value;
+    const tipo = document.getElementById("select-tipo").value;
+    let modeloVehiculo;
+    if (modelo !== "")
     {
-        const modelo = document.getElementById("txt-modelo").value;
-        const anoFab = document.getElementById("txt-anoFab").value;
-        const velMax = document.getElementById("txt-velMax").value;
-        const altMax = document.getElementById("txt-altMax").value;
-        const autonomia = document.getElementById("txt-autonomia").value;
-        const cantPue = document.getElementById("txt-cantPue").value;
-        const cantRue = document.getElementById("txt-cantRue").value;
-
-        modeloVehiculo = vehiculo.modelo;
-        vehiculo.SetModelo(modelo);
-        vehiculo.SetAnoFab(anoFab);
-        vehiculo.SetVelMax(velMax);
-        if (vehiculo instanceof Aereo)
+        anoFab = parseInt(anoFab);
+        if (anoFab && anoFab > 1885)
         {
-            vehiculo.SetAltMax(altMax);
-            vehiculo.SetAutonomia(autonomia);
+            velMax = parseInt(velMax);
+            if (velMax && velMax > 0)
+            {
+                if (tipo === "aereo")
+                {
+                    altMax = parseInt(altMax);
+                    if (altMax && altMax > 0)
+                    {
+                        autonomia = parseInt(autonomia);
+                        if (autonomia && autonomia > 0)
+                        {
+                            modeloVehiculo = vehiculo.modelo;
+                            vehiculo.modelo = modelo;
+                            vehiculo.anoFab = anoFab;
+                            vehiculo.velMax = velMax;
+                            vehiculo.altMax = altMax;
+                            vehiculo.autonomia = autonomia;
+
+                            mensaje = "El vehiculo se ha modificado correctamente";
+                            ActualizarTabla();
+                            MostrarDatos();
+                        }
+                        else
+                        {
+                            mensaje = "Dato invalido en la autonomia";
+                        }
+                    }
+                    else
+                    {
+                        mensaje = "Dato invalido en la altura maxima";
+                    }
+                }
+                else
+                {
+                    cantPue = parseInt(cantPue);
+                    if (cantPue && cantPue > -1)
+                    {
+                        
+                        modeloVehiculo = vehiculo.modelo;
+                        vehiculo.modelo = modelo;
+                        vehiculo.anoFab = anoFab;
+                        vehiculo.velMax = velMax;
+                        vehiculo.cantPue = cantPue;
+                        vehiculo.cantRue = cantRue;
+                    
+                        mensaje = "El vehiculo se ha modificado correctamente";
+                        ActualizarTabla();
+                        MostrarDatos();
+                    }
+                    else
+                    {
+                        mensaje = "Dato invalido en la cantidad de puertas";
+                    }
+                }
+            }
+            else
+            {
+                mensaje = "Dato invalido en la velocidad maxima";
+            }
         }
         else
         {
-            vehiculo.SetCantPue(cantPue);
-            vehiculo.SetCantRue(cantRue);
-            
+            mensaje = "Dato invalido en el año de fabricacion";
         }
-
-        ActualizarTabla();
-        MostrarDatos();
-        mensaje = "El vehiculo se ha modificado correctamente";
     }
-    catch(error)
-    {
-        mensaje = "Error: " + error.message;
+    else{
+        mensaje = "El modelo no puede estar vacio";
     }
+    
 
     alert(mensaje);
 }
-
 
 function Eliminar(vehiculo)
 {
@@ -447,11 +372,11 @@ function MostrarDatos()
 function ObtenerProximoId(vehiculos)
 {
     let id = 1;
-    for (let vehiculo of vehiculos)
+    for (vehiculo of vehiculos)
     {
         if (vehiculo.id >= id)
         {
-            id = vehiculo.id + 1;
+            id = vehiculo.id += 1;
         }
     }
     return id;
@@ -547,8 +472,92 @@ btn_cancelar.addEventListener("click", (e) => {
 const btn_agregar = document.getElementById("btn-agregar");
 btn_agregar.addEventListener("click", (e) => {
     e.preventDefault();
-    Agregar();
+    let vehiculo;
+    const id = ObtenerProximoId(vehiculos);
+    const modelo = document.getElementById("txt-modelo").value;
+    let anoFab = document.getElementById("txt-anoFab").value;
+    let velMax = document.getElementById("txt-velMax").value;
+    let altMax = document.getElementById("txt-altMax").value;
+    let autonomia = document.getElementById("txt-autonomia").value;
+    let cantPue = document.getElementById("txt-cantPue").value;
+    let cantRue = document.getElementById("txt-cantRue").value;
+    const tipo = document.getElementById("select-tipo").value;
+    if (modelo !== "" )
+    {
+        anoFab = parseInt(anoFab);
+        if (anoFab && anoFab > 1885)
+        {
+            velMax = parseInt(velMax);
+            if (velMax && velMax > 0)
+            {
+                if (tipo === "aereo")
+                {
+                    altMax = parseInt(altMax);
+                    if (altMax && altMax > 0)
+                    {
+                        autonomia = parseInt(autonomia);
+                        if (autonomia && autonomia > 0)
+                        {
+                            vehiculo = new Aereo(id, modelo, anoFab, velMax, altMax, autonomia);
+                            vehiculos.push(vehiculo);
+                            mensaje = "vehiculo agregado correctamente";
+                            ActualizarTabla();
+                            MostrarDatos();
+                        }
+                        else
+                        {
+                            mensaje = "Dato invalido en la autonomia";
+                        }
+                        }
+                    else
+                    {
+                        mensaje = "Dato invalido en la altura maxima";
+                    }
+                }
+                else
+                {
+                    cantPue = parseInt(cantPue);
+                    if (cantPue && cantPue > -1)
+                    {
+                        cantRue = parseInt(cantRue);
+                        if (cantRue && cantRue > 0)
+                        {
+                            vehiculo = new Terrestre(id, modelo, anoFab, velMax, cantPue, cantRue);
+                            vehiculos.push(vehiculo);
+                            mensaje = "vehiculo agregado correctamente";
+                            ActualizarTabla();
+                            MostrarDatos();
+                        }
+                        else
+                        {
+                            mensaje = "Dato invalido en la velocidad maxima";
+                        }
+                    }
+                    else
+                    {
+                        mensaje = "Dato invalido en la cantidad de puertas";
+                    }
+                }
+            }
+            else
+            {
+                mensaje = "Dato invalido en la velocidad maxima";
+            }
+        }
+        else
+        {
+            mensaje = "Dato invalido en el año de fabricacion";
+        }
+    }
+    else{
+        mensaje = "El modelo no puede estar vacio";
+    }
+
+    alert(mensaje);
+
+    
 });
+
 
 
 let t_head;
